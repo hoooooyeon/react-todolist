@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 const ListBlock = styled.div`
   width: 400px;
@@ -10,7 +11,7 @@ const ListBlock = styled.div`
   align-items: center;
   margin: 0 0 10px 25px;
 `;
-const Text = styled.div`
+const TextForm = styled.div`
   width: 300px;
   height: 32px;
   font-size: 20px;
@@ -40,10 +41,10 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   text-align: center;
 `;
 
-const List = () => {
+const List = ({ input }) => {
   return (
     <ListBlock>
-      <Text />
+      <TextForm>{input}</TextForm>
       <div>
         <IconDiv>
           <StyledFontAwesomeIcon icon={faExclamation} />

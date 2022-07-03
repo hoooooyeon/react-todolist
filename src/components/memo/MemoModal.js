@@ -70,7 +70,7 @@ const InputDiv = styled.div`
   text-align: center;
 `;
 
-const InputText = styled.div`
+const TextInput = styled.input`
   width: 300px;
   height: 30px;
   border: none;
@@ -79,6 +79,10 @@ const InputText = styled.div`
   outline: none;
   margin-right: 10px;
   padding-left: 5px;
+  &::placeholder {
+    font-size: 20px;
+    color: #e0e7e9;
+  }
 `;
 
 const ListDiv = styled.div`
@@ -148,6 +152,11 @@ const MemoModal = ({ modal, onDeleteModal }) => {
     });
   };
 
+  const [input, setInput] = useState();
+  const onChangeInput = (e) => {
+    setInput(e.target.value);
+  };
+
   if (!modal) return null;
   return (
     <ModalBlock>
@@ -167,11 +176,12 @@ const MemoModal = ({ modal, onDeleteModal }) => {
         </ModalHeader>
         <div>
           <InputDiv>
-            <InputText />
-            <Button>ADD</Button>
+            <TextInput placeholder="Input here..." onChange={onChangeInput} />
+            <Button>INPUT</Button>
           </InputDiv>
           <ListDiv>
-            <List />
+            <List input={[input]} />
+            {/* 책 write 다시보기 */}
           </ListDiv>
           <Button item="true">CONFIRM</Button>
           <Button item="true">CANCEL</Button>
