@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import MemoModal from '../memo/MemoModal';
+import MemoModal from '../memo/modal/MemoModal';
 
 const SliderBlock = styled.div`
   background-color: white;

@@ -4,7 +4,7 @@ import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
-const ListBlock = styled.div`
+const MemoListItemBlock = styled.div`
   width: 400px;
   display: flex;
   justify-content: space-evenly;
@@ -41,20 +41,22 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   text-align: center;
 `;
 
-const List = ({ input }) => {
+const MemoListItem = ({ item, onPoint }) => {
+  const { text, point } = item;
+
   return (
-    <ListBlock>
-      <TextForm>{input}</TextForm>
+    <MemoListItemBlock>
+      <TextForm point={point}>{text}</TextForm>
       <div>
-        <IconDiv>
+        <IconDiv onClick={onPoint}>
           <StyledFontAwesomeIcon icon={faExclamation} />
         </IconDiv>
         <IconDiv>
           <StyledFontAwesomeIcon icon={faTrashCan} />
         </IconDiv>
       </div>
-    </ListBlock>
+    </MemoListItemBlock>
   );
 };
 
-export default List;
+export default MemoListItem;
