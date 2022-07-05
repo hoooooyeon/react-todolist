@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useCallback } from 'react';
-import Button from '../../common/Button';
+import Button from '../common/Button';
 
 const ModalInsertBlock = styled.form`
   position: relative;
@@ -32,7 +32,7 @@ const ModalInsert = ({ onInsert }) => {
 
   const onSubmit = useCallback(
     (e) => {
-      onInsert(value);
+      onInsert(value.trim());
       setValue('');
       e.preventDefault();
     },

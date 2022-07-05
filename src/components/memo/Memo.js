@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Slider from '../common/Slider';
+import MemoList from './MemoList';
 
 const Main = styled.div`
   width: 100%;
@@ -24,11 +25,18 @@ const MemoBlock = styled.div`
   grid-auto-flow: dense;
 `;
 
-const Memo = () => {
+const Memo = ({ items, onInsert, onRemove, onPoint }) => {
   return (
     <Main>
-      <Slider />
-      <MemoBlock />
+      <Slider
+        items={items}
+        onInsert={onInsert}
+        onRemove={onRemove}
+        onPoint={onPoint}
+      />
+      <MemoBlock>
+        <MemoList />
+      </MemoBlock>
     </Main>
   );
 };

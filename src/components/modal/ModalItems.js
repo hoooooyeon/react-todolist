@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MemoListItem from './MemoListItem';
+import ModalItem from './ModalItem';
 
 const ItemItemsBlock = styled.div`
   position: relative;
@@ -10,11 +10,16 @@ const ItemItemsBlock = styled.div`
   width: 450px;
 `;
 
-const ModalItems = ({ items, onPoint }) => {
+const ModalItems = ({ items, onPoint, onRemove }) => {
   return (
     <ItemItemsBlock>
       {items.map((item) => (
-        <MemoListItem item={item} key={item.id} onPoint={onPoint} />
+        <ModalItem
+          item={item}
+          key={item.id}
+          onRemove={onRemove}
+          onPoint={onPoint}
+        />
       ))}
     </ItemItemsBlock>
   );

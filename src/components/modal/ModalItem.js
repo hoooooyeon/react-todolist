@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import classnames from 'classnames';
+import '../../index.css';
 
-const MemoListItemBlock = styled.div`
+const ModalItemBlock = styled.div`
   width: 400px;
   display: flex;
   justify-content: space-evenly;
@@ -41,22 +42,23 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   text-align: center;
 `;
 
-const MemoListItem = ({ item, onPoint }) => {
-  const { text, point } = item;
+const ModalItem = ({ item, onPoint, onRemove }) => {
+  const { id, text, point } = item;
 
+  if (!text) return null;
   return (
-    <MemoListItemBlock>
-      <TextForm point={point}>{text}</TextForm>
+    <ModalItemBlock>
+      <TextForm classnName={classnames({ pointing: point })}>{text}</TextForm>
       <div>
-        <IconDiv onClick={onPoint}>
+        <IconDiv onClick={() => onPoint(id)}>
           <StyledFontAwesomeIcon icon={faExclamation} />
         </IconDiv>
-        <IconDiv>
+        <IconDiv onClick={() => onRemove(id)}>
           <StyledFontAwesomeIcon icon={faTrashCan} />
         </IconDiv>
       </div>
-    </MemoListItemBlock>
+    </ModalItemBlock>
   );
 };
 
-export default MemoListItem;
+export default ModalItem;

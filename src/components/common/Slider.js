@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import MemoModal from '../memo/modal/MemoModal';
+import AddModal from '../modal/AddModal';
 
 const SliderBlock = styled.div`
   background-color: white;
@@ -55,7 +55,7 @@ const StyledLi = styled.li`
   }
 `;
 
-const Slider = () => {
+const Slider = ({ items, onInsert, onRemove, onPoint }) => {
   const [modal, setModal] = useState(false);
   const onCreateModal = () => {
     setModal(true);
@@ -77,7 +77,14 @@ const Slider = () => {
           </StyledLi>
         </StyledUl>
       </SliderBlock>
-      <MemoModal modal={modal} onDeleteModal={onDeleteModal} />
+      <AddModal
+        modal={modal}
+        onDeleteModal={onDeleteModal}
+        items={items}
+        onInsert={onInsert}
+        onRemove={onRemove}
+        onPoint={onPoint}
+      />
     </>
   );
 };

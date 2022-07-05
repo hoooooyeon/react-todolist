@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState, useRef, useCallback } from 'react';
-import Button from '../../common/Button';
+import Button from '../common/Button';
 import ModalHeader from './ModalHeader';
 import ModalInsert from './ModalInsert';
 import ModalItems from './ModalItems';
@@ -23,7 +23,7 @@ const ModalBg = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
 `;
-const AddModal = styled.div`
+const ModalForm = styled.div`
   width: 500px;
   height: 500px;
   position: absolute;
@@ -33,46 +33,12 @@ const AddModal = styled.div`
   border: none;
 `;
 
-const MemoModal = ({ modal }) => {
-  const [items, setItems] = useState([]);
-
-  const nextId = useRef(1);
-  const onInsert = useCallback(
-    (text) => {
-      const item = {
-        id: nextId.current,
-        text,
-        point: false,
-      };
-      setItems(items.concat(item));
-      nextId.current += 1;
-    },
-    [items],
-  );
-
-  const onRemove = useCallback(
-    (id) => {
-      setItems(items.filter((item) => item.id !== id));
-    },
-    [items],
-  );
-
-  const onPoint = useCallback(
-    (id) => {
-      setItems(
-        items.map((item) =>
-          item.id === id ? { ...item, point: !item.point } : item,
-        ),
-      );
-    },
-    [items],
-  );
-
+const AddModal = ({ modal, items, onInsert, onRemove, onPoint }) => {
   if (!modal) return null;
   return (
     <ModalBlock>
       <ModalBg />
-      <AddModal>
+      <ModalForm>
         <ModalHeader />
         <div>
           <ModalInsert onInsert={onInsert} />
@@ -80,9 +46,9 @@ const MemoModal = ({ modal }) => {
           <Button item="true">CONFIRM</Button>
           <Button item="true">CANCEL</Button>
         </div>
-      </AddModal>
+      </ModalForm>
     </ModalBlock>
   );
 };
 
-export default MemoModal;
+export default AddModal;
