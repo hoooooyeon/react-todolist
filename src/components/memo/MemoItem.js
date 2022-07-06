@@ -37,12 +37,13 @@ const MemoItemTextForm = styled.div`
   top: -4px;
 `;
 
-const MemoItem = () => {
+const MemoItem = ({ mdItem }) => {
+  const { text, checked, pointed } = mdItem;
   return (
     <MemoItemBlock>
       <MemoItemCheckBox />
       <CheckBoxLabel />
-      <MemoItemTextForm>aaaaaaaaaaaaaa</MemoItemTextForm>
+      <MemoItemTextForm>{text}</MemoItemTextForm>
     </MemoItemBlock>
   );
 };

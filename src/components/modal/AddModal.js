@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import React, { useState, useRef, useCallback } from 'react';
-import Button from '../common/Button';
 import ModalHeader from './ModalHeader';
 import ModalInsert from './ModalInsert';
 import ModalItems from './ModalItems';
@@ -18,7 +16,7 @@ const ModalBlock = styled.div`
 `;
 
 const ModalBg = styled.div`
-  z-index: 998;
+  z-index: 997;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
@@ -33,18 +31,43 @@ const ModalForm = styled.div`
   border: none;
 `;
 
-const AddModal = ({ modal, items, onInsert, onRemove, onPoint }) => {
-  if (!modal) return null;
+const StyledButton = styled.button`
+  background-color: #e0e7e9;
+  border: none;
+  color: #6c7a89;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 120px;
+  height: 40px;
+  font-size: 20px;
+  position: relative;
+  left: 25%;
+  transform: translate(0, 150%);
+  & + & {
+    margin-left: 1rem;
+  }
+`;
+
+const AddModal = ({
+  mdItems,
+  onInsert,
+  onRemove,
+  onPoint,
+  modalClose,
+  insertMemoItem,
+}) => {
   return (
     <ModalBlock>
-      <ModalBg />
+      <ModalBg onClick={modalClose} />
       <ModalForm>
         <ModalHeader />
         <div>
           <ModalInsert onInsert={onInsert} />
-          <ModalItems items={items} onRemove={onRemove} onPoint={onPoint} />
-          <Button item="true">CONFIRM</Button>
-          <Button item="true">CANCEL</Button>
+          <ModalItems mdItems={mdItems} onRemove={onRemove} onPoint={onPoint} />
+          <StyledButton onClick={() => insertMemoItem(mdItems)}>
+            CONFIRM
+          </StyledButton>
+          <StyledButton onClick={modalClose}>CANCEL</StyledButton>
         </div>
       </ModalForm>
     </ModalBlock>

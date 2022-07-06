@@ -29,13 +29,13 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   color: #354649;
 `;
 
-const MemoFunc = ({ func }) => {
+const MemoFunc = ({ func, mmItem, removeMemoItem }) => {
   return (
     <MemoFuncBlock ref={func}>
       <IconDiv>
         <StyledFontAwesomeIcon icon={faFilePen} />
       </IconDiv>
-      <IconDiv>
+      <IconDiv onClick={() => removeMemoItem(mmItem.id)}>
         <StyledFontAwesomeIcon icon={faTrashCan} />
       </IconDiv>
     </MemoFuncBlock>

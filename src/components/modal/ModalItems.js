@@ -10,13 +10,13 @@ const ItemItemsBlock = styled.div`
   width: 450px;
 `;
 
-const ModalItems = ({ items, onPoint, onRemove }) => {
+const ModalItems = ({ mdItems, onPoint, onRemove }) => {
   return (
     <ItemItemsBlock>
-      {items.map((item) => (
+      {mdItems.map((mdItem) => (
         <ModalItem
-          item={item}
-          key={item.id}
+          mdItem={mdItem}
+          key={mdItem.id}
           onRemove={onRemove}
           onPoint={onPoint}
         />
@@ -24,5 +24,4 @@ const ModalItems = ({ items, onPoint, onRemove }) => {
     </ItemItemsBlock>
   );
 };
-
 export default ModalItems;

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useState, useCallback } from 'react';
-import Button from '../common/Button';
 
 const ModalInsertBlock = styled.form`
   position: relative;
@@ -21,6 +20,18 @@ const TextInput = styled.input`
     font-size: 20px;
     color: #e0e7e9;
   }
+`;
+
+const StyledButton = styled.button`
+  background-color: #e0e7e9;
+  border: none;
+  color: #6c7a89;
+  font-weight: bold;
+  border-radius: 5px;
+
+  width: 80px;
+  height: 35px;
+  font-size: 15px;
 `;
 
 const ModalInsert = ({ onInsert }) => {
@@ -46,7 +57,7 @@ const ModalInsert = ({ onInsert }) => {
         onChange={onChange}
         value={value}
       />
-      <Button>INPUT</Button>
+      <StyledButton>INPUT</StyledButton>
     </ModalInsertBlock>
   );
 };

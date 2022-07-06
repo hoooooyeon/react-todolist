@@ -12,7 +12,6 @@ const SliderBlock = styled.div`
   position: fixed;
   top: 70px;
   left: 0;
-  z-index: 999;
   transition: width 0.3s;
 `;
 
@@ -55,15 +54,15 @@ const StyledLi = styled.li`
   }
 `;
 
-const Slider = ({ items, onInsert, onRemove, onPoint }) => {
-  const [modal, setModal] = useState(false);
-  const onCreateModal = () => {
-    setModal(true);
-  };
-  const onDeleteModal = () => {
-    setModal(false);
-  };
-
+const Slider = ({
+  mdItems,
+  onInsert,
+  onRemove,
+  onPoint,
+  insertMemoItem,
+  modalClose,
+  modalOpen,
+}) => {
   return (
     <>
       <SliderBlock>
@@ -71,20 +70,22 @@ const Slider = ({ items, onInsert, onRemove, onPoint }) => {
           <StyledFontAwesomeIcon icon={faBars} />
         </IconDiv>
         <StyledUl>
-          <StyledLi onClick={onCreateModal}>
+          <StyledLi onClick={modalClose}>
             <StyledFontAwesomeIcon icon={faCalendarPlus} margin="true" />
             <p>Memo</p>
           </StyledLi>
         </StyledUl>
       </SliderBlock>
-      <AddModal
-        modal={modal}
-        onDeleteModal={onDeleteModal}
-        items={items}
-        onInsert={onInsert}
-        onRemove={onRemove}
-        onPoint={onPoint}
-      />
+      {modalOpen && (
+        <AddModal
+          modalClose={modalClose}
+          mdItems={mdItems}
+          onInsert={onInsert}
+          onRemove={onRemove}
+          onPoint={onPoint}
+          insertMemoItem={insertMemoItem}
+        />
+      )}
     </>
   );
 };

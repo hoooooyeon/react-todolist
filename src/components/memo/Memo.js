@@ -25,17 +25,36 @@ const MemoBlock = styled.div`
   grid-auto-flow: dense;
 `;
 
-const Memo = ({ items, onInsert, onRemove, onPoint }) => {
+const Memo = ({
+  mdItems,
+  onInsert,
+  onRemove,
+  onPoint,
+  mmItems,
+  insertMemoItem,
+  removeMemoItem,
+  modalClose,
+  modalOpen,
+}) => {
   return (
     <Main>
       <Slider
-        items={items}
+        mdItems={mdItems}
         onInsert={onInsert}
         onRemove={onRemove}
         onPoint={onPoint}
+        insertMemoItem={insertMemoItem}
+        modalClose={modalClose}
+        modalOpen={modalOpen}
       />
       <MemoBlock>
-        <MemoList />
+        {mmItems.map((mmItem) => (
+          <MemoList
+            mmItem={mmItem}
+            key={mmItem.id}
+            removeMemoItem={removeMemoItem}
+          />
+        ))}
       </MemoBlock>
     </Main>
   );

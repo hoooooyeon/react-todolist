@@ -5,10 +5,13 @@ const MemoItemsBlock = styled.div`
   margin: 15px 0 0 10px;
 `;
 
-const MemoItems = () => {
+const MemoItems = ({ mmItem }) => {
+  const { mdItems } = mmItem;
   return (
     <MemoItemsBlock>
-      <MemoItem />
+      {mdItems.map((mdItem) => (
+        <MemoItem mdItem={mdItem} key={mdItem.id} />
+      ))}
     </MemoItemsBlock>
   );
 };

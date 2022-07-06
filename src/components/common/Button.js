@@ -6,6 +6,7 @@ const buttonStyle = css`
   color: #6c7a89;
   font-weight: bold;
   border-radius: 5px;
+  z-index: 1000;
 `;
 
 const StyledItemButton = styled.button`
@@ -30,9 +31,11 @@ const StyledListButton = styled.button`
   font-size: 15px;
 `;
 
-const Button = ({ item, children }) => {
+const Button = ({ item, children, modalClose, insertMemoItem }) => {
   return item ? (
-    <StyledItemButton>{children}</StyledItemButton>
+    <StyledItemButton modalClose={modalClose} inserMemoItem={insertMemoItem}>
+      {children}
+    </StyledItemButton>
   ) : (
     <StyledListButton>{children}</StyledListButton>
   );

@@ -42,8 +42,8 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   text-align: center;
 `;
 
-const ModalItem = ({ item, onPoint, onRemove }) => {
-  const { id, text, point } = item;
+const ModalItem = ({ mdItem, onPoint, onRemove }) => {
+  const { id, text, point } = mdItem;
 
   if (!text) return null;
   return (
