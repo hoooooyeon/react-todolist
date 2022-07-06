@@ -65,7 +65,7 @@ const AddModal = ({
           <ModalInsert onInsert={onInsert} />
           <ModalItems mdItems={mdItems} onRemove={onRemove} onPoint={onPoint} />
           <StyledButton onClick={() => insertMemoItem(mdItems)}>
-            CONFIRM
+            ADD
           </StyledButton>
           <StyledButton onClick={modalClose}>CANCEL</StyledButton>
         </div>
