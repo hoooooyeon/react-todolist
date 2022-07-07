@@ -35,6 +35,9 @@ const Memo = ({
   removeMemoItem,
   modalClose,
   modalOpen,
+  editModalOpen,
+  editModalClose,
+  selectedId,
 }) => {
   return (
     <Main>
@@ -46,6 +49,8 @@ const Memo = ({
         insertMemoItem={insertMemoItem}
         modalClose={modalClose}
         modalOpen={modalOpen}
+        selectedId={selectedId}
+        editModalClose={editModalClose}
       />
       <MemoBlock>
         {mmItems.map((mmItem) => (
@@ -53,6 +58,7 @@ const Memo = ({
             mmItem={mmItem}
             key={mmItem.id}
             removeMemoItem={removeMemoItem}
+            editModalOpen={editModalOpen}
           />
         ))}
       </MemoBlock>

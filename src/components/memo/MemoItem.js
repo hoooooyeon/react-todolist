@@ -18,7 +18,7 @@ const MemoItemCheckBox = styled.input`
     color: #a3c6c4;
   }
 `;
-const CheckBoxLabel = styled.label`
+const MemoItemCheckBoxLabel = styled.label`
   width: 20px;
   height: 20px;
   border: 2px solid #e0e7e9;
@@ -42,7 +42,7 @@ const MemoItem = ({ mdItem }) => {
   return (
     <MemoItemBlock>
       <MemoItemCheckBox />
-      <CheckBoxLabel />
+      <MemoItemCheckBoxLabel />
       <MemoItemTextForm>{text}</MemoItemTextForm>
     </MemoItemBlock>
   );

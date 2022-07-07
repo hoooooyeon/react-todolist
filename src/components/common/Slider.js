@@ -62,6 +62,8 @@ const Slider = ({
   insertMemoItem,
   modalClose,
   modalOpen,
+  selectedId,
+  editModalClose,
 }) => {
   return (
     <>
@@ -84,6 +86,8 @@ const Slider = ({
           onRemove={onRemove}
           onPoint={onPoint}
           insertMemoItem={insertMemoItem}
+          selectedId={selectedId}
+          editModalClose={editModalClose}
         />
       )}
     </>

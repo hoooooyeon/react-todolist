@@ -12,6 +12,38 @@ const ModalItemBlock = styled.div`
   align-items: center;
   margin: 0 0 10px 25px;
 `;
+
+const CheckBox = styled.input`
+  display: none;
+`;
+const CheckBoxLabel = styled.label`
+  width: 30px;
+  height: 30px;
+  border: 2px solid #e0e7e9;
+  border-radius: 100px;
+  background-color: white;
+  position: relative;
+  &::after {
+    content: '✔';
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 25px;
+    position: absolute;
+    bottom: 3px;
+    color: #6c7a89;
+  }
+`;
+
+const SelectedTextForm = styled.div`
+  width: 250px;
+  height: 32px;
+  font-size: 20px;
+  border: 2px solid #a3c6c4;
+  border-radius: 5px;
+  padding: 1px 8px 0 8px;
+`;
+
 const TextForm = styled.div`
   width: 300px;
   height: 32px;
@@ -42,13 +74,21 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   text-align: center;
 `;
 
-const ModalItem = ({ mdItem, onPoint, onRemove }) => {
+const ModalItem = ({ mdItem, onPoint, onRemove, selectedId }) => {
   const { id, text, point } = mdItem;
 
   if (!text) return null;
   return (
     <ModalItemBlock>
-      <TextForm classnName={classnames({ pointing: point })}>{text}</TextForm>
+      {selectedId ? (
+        <>
+          <CheckBox />
+          <CheckBoxLabel />
+          <SelectedTextForm>{text}</SelectedTextForm>
+        </>
+      ) : (
+        <TextForm classnName={classnames({ pointing: point })}>{text}</TextForm>
+      )}
       <div>
         <IconDiv onClick={() => onPoint(id)}>
           <StyledFontAwesomeIcon icon={faExclamation} />

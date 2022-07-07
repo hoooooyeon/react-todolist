@@ -55,6 +55,8 @@ const AddModal = ({
   onPoint,
   modalClose,
   insertMemoItem,
+  selectedId,
+  editModalClose,
 }) => {
   return (
     <ModalBlock>
@@ -63,10 +65,19 @@ const AddModal = ({
         <ModalHeader />
         <div>
           <ModalInsert onInsert={onInsert} />
-          <ModalItems mdItems={mdItems} onRemove={onRemove} onPoint={onPoint} />
-          <StyledButton onClick={() => insertMemoItem(mdItems)}>
-            ADD
-          </StyledButton>
+          <ModalItems
+            mdItems={mdItems}
+            onRemove={onRemove}
+            onPoint={onPoint}
+            selectedId={selectedId}
+          />
+          {selectedId ? (
+            <StyledButton onClick={editModalClose}>EDIT</StyledButton>
+          ) : (
+            <StyledButton onClick={() => insertMemoItem(mdItems)}>
+              ADD
+            </StyledButton>
+          )}
           <StyledButton onClick={modalClose}>CANCEL</StyledButton>
         </div>
       </ModalForm>

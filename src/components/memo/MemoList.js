@@ -20,7 +20,7 @@ const ListHeader = styled.h3`
   margin: 10px 0 0px 0;
 `;
 
-const MemoList = ({ mmItem, removeMemoItem }) => {
+const MemoList = ({ mmItem, removeMemoItem, modalClose, editModalOpen }) => {
   // MemoFunc를 마우스 올릴때만 보이게 하기.
   const func = useRef();
   const onMouseOver = (e) => {
@@ -30,10 +30,19 @@ const MemoList = ({ mmItem, removeMemoItem }) => {
     func.current.style.visibility = 'hidden';
   };
   return (
-    <MemoListBlock onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
+    <MemoListBlock
+      onMouseOut={onMouseOut}
+      onMouseOver={onMouseOver}
+      onClick={modalClose}
+    >
       <ListHeader>WEDNESDAY, July 5th</ListHeader>
       <MemoItems mmItem={mmItem} />
-      <MemoFunc func={func} mmItem={mmItem} removeMemoItem={removeMemoItem} />
+      <MemoFunc
+        func={func}
+        mmItem={mmItem}
+        removeMemoItem={removeMemoItem}
+        editModalOpen={editModalOpen}
+      />
     </MemoListBlock>
   );
 };

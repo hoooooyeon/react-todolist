@@ -7,6 +7,7 @@ function App() {
   const [mdItems, setMdItems] = useState([]);
   const [mmItems, setMmItems] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState();
 
   // 모달꺼
   const nextMdId = useRef(1);
@@ -73,6 +74,36 @@ function App() {
     setModalOpen(!modalOpen);
     setMdItems([]);
   };
+
+  // edit 모달 열고 닫기
+  const editModalOpen = useCallback(
+    (id) => {
+      setModalOpen(!modalOpen);
+      setSelectedId(id);
+
+      mmItems.map((mmItem) => {
+        if (mmItem.id === id) {
+          setMdItems(mmItem.mdItems);
+        }
+        return mdItems;
+      });
+
+      setMmItems(mmItems.filter((mmItem) => mmItem.id !== selectedId));
+    },
+    [modalOpen, mmItems, mdItems, selectedId],
+  );
+
+  const editModalClose = useCallback(() => {
+    const mmItem = {
+      id: selectedId,
+      mdItems,
+    };
+    setMmItems(mmItems.concat(mmItem));
+
+    setModalOpen(!modalOpen);
+    setMdItems([]);
+    setSelectedId();
+  }, [mmItems, modalOpen, mdItems, selectedId]);
   return (
     <>
       <Header />
@@ -86,6 +117,9 @@ function App() {
         removeMemoItem={removeMemoItem}
         modalClose={modalClose}
         modalOpen={modalOpen}
+        editModalOpen={editModalOpen}
+        editModalClose={editModalClose}
+        selectedId={selectedId}
       />
     </>
   );
