@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 import AddModal from '../modal/AddModal';
 
 const SliderBlock = styled.div`
@@ -56,14 +55,19 @@ const StyledLi = styled.li`
 
 const Slider = ({
   mdItems,
+  mmItems,
   onInsert,
   onRemove,
   onPoint,
+  onCheck,
   insertMemoItem,
   modalClose,
   modalOpen,
   selectedId,
   editModalClose,
+  today,
+  prevDate,
+  nextDate,
 }) => {
   return (
     <>
@@ -82,12 +86,17 @@ const Slider = ({
         <AddModal
           modalClose={modalClose}
           mdItems={mdItems}
+          mmItems={mmItems}
           onInsert={onInsert}
           onRemove={onRemove}
           onPoint={onPoint}
+          onCheck={onCheck}
           insertMemoItem={insertMemoItem}
           selectedId={selectedId}
           editModalClose={editModalClose}
+          today={today}
+          prevDate={prevDate}
+          nextDate={nextDate}
         />
       )}
     </>

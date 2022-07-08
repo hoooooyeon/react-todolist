@@ -1,9 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import classnames from 'classnames';
-import '../../index.css';
 
 const ModalItemBlock = styled.div`
   width: 400px;
@@ -23,15 +21,18 @@ const CheckBoxLabel = styled.label`
   border-radius: 100px;
   background-color: white;
   position: relative;
-  &::after {
-    content: '✔';
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    font-size: 25px;
-    position: absolute;
-    bottom: 3px;
-    color: #6c7a89;
+
+  ${CheckBox}:checked + & {
+    ::after {
+      content: '✔';
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      font-size: 25px;
+      position: absolute;
+      bottom: 3px;
+      color: #6c7a89;
+    }
   }
 `;
 
@@ -42,6 +43,18 @@ const SelectedTextForm = styled.div`
   border: 2px solid #a3c6c4;
   border-radius: 5px;
   padding: 1px 8px 0 8px;
+  ${(props) =>
+    props &&
+    css`
+      color: ${(props) =>
+        props.check.checked
+          ? 'rgba(0, 0, 0, 0.3)'
+          : props.point.pointed
+          ? 'rgb(240, 12, 12)'
+          : ''};
+      text-decoration: ${(props) =>
+        props.check.checked ? 'line-through' : 'null'};
+    `}
 `;
 
 const TextForm = styled.div`
@@ -51,6 +64,7 @@ const TextForm = styled.div`
   border: 2px solid #a3c6c4;
   border-radius: 5px;
   padding: 1px 8px 0 8px;
+  color: ${(props) => (props.point.pointed ? 'rgb(240, 12, 12)' : '')};
 `;
 
 const IconDiv = styled.div`
@@ -74,20 +88,26 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   text-align: center;
 `;
 
-const ModalItem = ({ mdItem, onPoint, onRemove, selectedId }) => {
-  const { id, text, point } = mdItem;
+const ModalItem = ({ mdItem, onPoint, onCheck, onRemove, selectedId }) => {
+  const { id, text, check, point } = mdItem;
 
   if (!text) return null;
   return (
     <ModalItemBlock>
       {selectedId ? (
         <>
-          <CheckBox />
-          <CheckBoxLabel />
-          <SelectedTextForm>{text}</SelectedTextForm>
+          <CheckBox
+            type="checkbox"
+            checked={check.checked}
+            onChange={() => {}}
+          />
+          <CheckBoxLabel htmlFor={check.id} onClick={() => onCheck(id)} />
+          <SelectedTextForm check={check} point={point}>
+            {text}
+          </SelectedTextForm>
         </>
       ) : (
-        <TextForm classnName={classnames({ pointing: point })}>{text}</TextForm>
+        <TextForm point={point}>{text}</TextForm>
       )}
       <div>
         <IconDiv onClick={() => onPoint(id)}>

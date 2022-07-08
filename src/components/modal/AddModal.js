@@ -50,25 +50,37 @@ const StyledButton = styled.button`
 
 const AddModal = ({
   mdItems,
+  mmItems,
   onInsert,
   onRemove,
   onPoint,
+  onCheck,
   modalClose,
   insertMemoItem,
   selectedId,
   editModalClose,
+  today,
+  prevDate,
+  nextDate,
 }) => {
   return (
     <ModalBlock>
       <ModalBg onClick={modalClose} />
       <ModalForm>
-        <ModalHeader />
+        <ModalHeader
+          prevDate={prevDate}
+          nextDate={nextDate}
+          today={today}
+          selectedId={selectedId}
+          mmItems={mmItems}
+        />
         <div>
           <ModalInsert onInsert={onInsert} />
           <ModalItems
             mdItems={mdItems}
             onRemove={onRemove}
             onPoint={onPoint}
+            onCheck={onCheck}
             selectedId={selectedId}
           />
           {selectedId ? (

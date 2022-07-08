@@ -21,6 +21,30 @@ const ListHeader = styled.h3`
 `;
 
 const MemoList = ({ mmItem, removeMemoItem, modalClose, editModalOpen }) => {
+  let memoDate = new Date(mmItem.cal);
+  const monthStr = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const dayStr = [
+    'SUNDAY',
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+  ];
   // MemoFunc를 마우스 올릴때만 보이게 하기.
   const func = useRef();
   const onMouseOver = (e) => {
@@ -35,7 +59,10 @@ const MemoList = ({ mmItem, removeMemoItem, modalClose, editModalOpen }) => {
       onMouseOver={onMouseOver}
       onClick={modalClose}
     >
-      <ListHeader>WEDNESDAY, July 5th</ListHeader>
+      <ListHeader>{`${dayStr[memoDate.getDay()]}, ${
+        monthStr[memoDate.getMonth()]
+      } 
+    ${memoDate.getDate()}th`}</ListHeader>
       <MemoItems mmItem={mmItem} />
       <MemoFunc
         func={func}

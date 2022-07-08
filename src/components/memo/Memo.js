@@ -29,6 +29,7 @@ const Memo = ({
   mdItems,
   onInsert,
   onRemove,
+  onCheck,
   onPoint,
   mmItems,
   insertMemoItem,
@@ -38,19 +39,27 @@ const Memo = ({
   editModalOpen,
   editModalClose,
   selectedId,
+  today,
+  prevDate,
+  nextDate,
 }) => {
   return (
     <Main>
       <Slider
         mdItems={mdItems}
+        mmItems={mmItems}
         onInsert={onInsert}
         onRemove={onRemove}
         onPoint={onPoint}
+        onCheck={onCheck}
         insertMemoItem={insertMemoItem}
         modalClose={modalClose}
         modalOpen={modalOpen}
         selectedId={selectedId}
         editModalClose={editModalClose}
+        today={today}
+        prevDate={prevDate}
+        nextDate={nextDate}
       />
       <MemoBlock>
         {mmItems.map((mmItem) => (

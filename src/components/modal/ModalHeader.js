@@ -3,6 +3,7 @@ import react, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import MemoItems from '../memo/MemoItems';
 
 const ModalHeaderBlock = styled.div`
   height: 15%;
@@ -36,20 +37,7 @@ const Today = styled.h1`
   margin-top: 25px;
 `;
 
-const ModalHeader = () => {
-  // 모달 헤더의 날짜 화살표 visibile
-  const arrowLeft = useRef();
-  const arrowRight = useRef();
-  const onMouseOver = () => {
-    arrowLeft.current.style.visibility = 'visible';
-    arrowRight.current.style.visibility = 'visible';
-  };
-  const onMouseOut = () => {
-    arrowLeft.current.style.visibility = 'hidden';
-    arrowRight.current.style.visibility = 'hidden';
-  };
-
-  // 현재 날짜 구하기
+const ModalHeader = ({ today, prevDate, nextDate, selectedId, mmItems }) => {
   const monthStr = [
     'January',
     'February',
@@ -73,36 +61,40 @@ const ModalHeader = () => {
     'FRIDAY',
     'SATURDAY',
   ];
-  const today = new Date();
-  const myToday = today;
-  const [myDate, setMyDate] = useState({
-    day: myToday.getDay(),
-    month: myToday.getMonth(),
-    date: myToday.getDate(),
+
+  let memoDate = '';
+  mmItems.map((mmItem) => {
+    if (mmItem.id === selectedId) {
+      memoDate = new Date(mmItem.cal);
+    }
+    return null;
   });
 
-  const prevDate = () => {
-    setMyDate({
-      ...myDate,
-      date: myToday.getDate() - 1,
-    });
+  // 모달 헤더의 날짜 화살표 visibile
+  const arrowLeft = useRef();
+  const arrowRight = useRef();
+  const onMouseOver = () => {
+    arrowLeft.current.style.visibility = 'visible';
+    arrowRight.current.style.visibility = 'visible';
   };
-  const nextDate = () => {
-    setMyDate({
-      ...myDate,
-      date: myToday.getDate() + 1,
-    });
+  const onMouseOut = () => {
+    arrowLeft.current.style.visibility = 'hidden';
+    arrowRight.current.style.visibility = 'hidden';
   };
+
   return (
     <ModalHeaderBlock onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
-      <IconDiv onClick={prevDate} ref={arrowLeft}>
+      <IconDiv ref={arrowLeft} onClick={() => prevDate(selectedId)}>
         <StyledFontAwesomeIcon icon={faCaretLeft} />
       </IconDiv>
       <Today>
-        {`${dayStr[myDate.day]}, ${monthStr[myDate.month]} 
-    ${myDate.date}th`}
+        {selectedId
+          ? `${dayStr[memoDate.getDay()]}, ${monthStr[memoDate.getMonth()]} 
+    ${memoDate.getDate()}th`
+          : `${dayStr[today.getDay()]}, ${monthStr[today.getMonth()]} 
+${today.getDate()}th`}
       </Today>
-      <IconDiv onClick={nextDate} ref={arrowRight}>
+      <IconDiv ref={arrowRight} onClick={() => nextDate(selectedId)}>
         <StyledFontAwesomeIcon icon={faCaretRight} />
       </IconDiv>
     </ModalHeaderBlock>

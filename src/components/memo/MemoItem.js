@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const MemoItemBlock = styled.div`
   width: 250px;
@@ -35,15 +35,29 @@ const MemoItemTextForm = styled.div`
   position: relative;
   left: 10px;
   top: -4px;
+  ${(props) =>
+    props &&
+    css`
+      color: ${(props) =>
+        props.check.checked
+          ? 'rgba(0, 0, 0, 0.3)'
+          : props.point.pointed
+          ? 'rgb(240, 12, 12)'
+          : ''};
+      text-decoration: ${(props) =>
+        props.check.checked ? 'line-through' : 'null'};
+    `}
 `;
 
 const MemoItem = ({ mdItem }) => {
-  const { text, checked, pointed } = mdItem;
+  const { text, check, point } = mdItem;
   return (
     <MemoItemBlock>
-      <MemoItemCheckBox />
-      <MemoItemCheckBoxLabel />
-      <MemoItemTextForm>{text}</MemoItemTextForm>
+      <MemoItemCheckBox type="checkbox" checked={check.checked} readOnly />
+      <MemoItemCheckBoxLabel htmlFor={check.id} />
+      <MemoItemTextForm check={check} point={point}>
+        {text}
+      </MemoItemTextForm>
     </MemoItemBlock>
   );
 };
