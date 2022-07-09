@@ -65,7 +65,7 @@ const Slider = ({
   modalOpen,
   selectedId,
   editModalClose,
-  today,
+  myDate,
   prevDate,
   nextDate,
 }) => {
@@ -94,7 +94,7 @@ const Slider = ({
           insertMemoItem={insertMemoItem}
           selectedId={selectedId}
           editModalClose={editModalClose}
-          today={today}
+          myDate={myDate}
           prevDate={prevDate}
           nextDate={nextDate}
         />

@@ -59,7 +59,7 @@ const AddModal = ({
   insertMemoItem,
   selectedId,
   editModalClose,
-  today,
+  myDate,
   prevDate,
   nextDate,
 }) => {
@@ -70,7 +70,7 @@ const AddModal = ({
         <ModalHeader
           prevDate={prevDate}
           nextDate={nextDate}
-          today={today}
+          myDate={myDate}
           selectedId={selectedId}
           mmItems={mmItems}
         />

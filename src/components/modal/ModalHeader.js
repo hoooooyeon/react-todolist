@@ -37,7 +37,7 @@ const Today = styled.h1`
   margin-top: 25px;
 `;
 
-const ModalHeader = ({ today, prevDate, nextDate, selectedId, mmItems }) => {
+const ModalHeader = ({ myDate, prevDate, nextDate, selectedId, mmItems }) => {
   const monthStr = [
     'January',
     'February',
@@ -91,8 +91,8 @@ const ModalHeader = ({ today, prevDate, nextDate, selectedId, mmItems }) => {
         {selectedId
           ? `${dayStr[memoDate.getDay()]}, ${monthStr[memoDate.getMonth()]} 
     ${memoDate.getDate()}th`
-          : `${dayStr[today.getDay()]}, ${monthStr[today.getMonth()]} 
-${today.getDate()}th`}
+          : `${dayStr[myDate.getDay()]}, ${monthStr[myDate.getMonth()]} 
+${myDate.getDate()}th`}
       </Today>
       <IconDiv ref={arrowRight} onClick={() => nextDate(selectedId)}>
         <StyledFontAwesomeIcon icon={faCaretRight} />

@@ -39,7 +39,7 @@ const Memo = ({
   editModalOpen,
   editModalClose,
   selectedId,
-  today,
+  myDate,
   prevDate,
   nextDate,
 }) => {
@@ -57,7 +57,7 @@ const Memo = ({
         modalOpen={modalOpen}
         selectedId={selectedId}
         editModalClose={editModalClose}
-        today={today}
+        myDate={myDate}
         prevDate={prevDate}
         nextDate={nextDate}
       />

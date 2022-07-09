@@ -5,20 +5,28 @@ import { useState, useRef, useCallback } from 'react';
 
 function App() {
   let today = new Date();
-  let myday = String(today);
+  let _today = String(today);
 
   const [mdItems, setMdItems] = useState([]);
   const [mmItems, setMmItems] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState();
+  const [myDate, setMyDate] = useState();
+
+  setMyDate(_today);
 
   // 모달 헤더 날짜
   const prevDate = (id) => {
     mmItems.map((mmItem) => {
       if (mmItem.id === id) {
-        let memoDate = new Date(mmItem.cal);
+        let memoDate = new Date(mmItem.cal.myDate);
         memoDate.setDate(memoDate.getDate() - 1);
+        setMyDate(memoDate);
+
+        return mmItem;
       }
+      myDate.setDate(myDate.getDate() - 1);
+
       return mmItem;
     });
   };
@@ -27,7 +35,10 @@ function App() {
       if (mmItem.id === id) {
         let memoDate = new Date(mmItem.cal);
         memoDate.setDate(memoDate.getDate() + 1);
+        setMyDate(memoDate);
+        return mmItem;
       }
+      myDate.setDate(myDate.getDate() + 1);
       return mmItem;
     });
   };
@@ -97,7 +108,7 @@ function App() {
       const mmItem = {
         id: nextMmId.current,
         mdItems,
-        cal: myday,
+        cal: myDate,
       };
       setMmItems(mmItems.concat(mmItem));
       nextMmId.current += 1;
@@ -105,7 +116,7 @@ function App() {
       setModalOpen(!modalOpen);
       setMdItems([]);
     },
-    [mmItems, modalOpen, myday],
+    [mmItems, modalOpen, myDate, _today],
   );
 
   const removeMemoItem = useCallback(
@@ -150,6 +161,7 @@ function App() {
         mmItem.id === selectedId
           ? {
               ...mmItem,
+              cal: myDate,
               mdItems: mdItems,
             }
           : mmItem,
@@ -158,7 +170,7 @@ function App() {
     setModalOpen(!modalOpen);
     setMdItems([]);
     setSelectedId();
-  }, [mmItems, modalOpen, mdItems, selectedId]);
+  }, [mmItems, modalOpen, mdItems, selectedId, myDate]);
 
   return (
     <>
@@ -177,7 +189,7 @@ function App() {
         editModalOpen={editModalOpen}
         editModalClose={editModalClose}
         selectedId={selectedId}
-        today={today}
+        myDate={myDate}
         prevDate={prevDate}
         nextDate={nextDate}
       />
