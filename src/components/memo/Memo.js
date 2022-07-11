@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Slider from '../common/Slider';
 import MemoList from './MemoList';
+import { useRef } from 'react';
 
 const Main = styled.div`
   width: 100%;
@@ -43,6 +44,17 @@ const Memo = ({
   prevDate,
   nextDate,
 }) => {
+  // masonry layout
+  const memoListRef = useRef();
+  const masonryLayout = () => {
+    console.log(memoListRef.offsetHeight);
+    memoListRef.current.style.gridRowEnd = '';
+    memoListRef.current.style.gridRowEnd = `span ${Math.ceil(
+      memoListRef.offsetHeight / 10,
+    )}`;
+  };
+  window.addEventListener('resize', masonryLayout);
+
   return (
     <Main>
       <Slider

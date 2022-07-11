@@ -1,52 +1,47 @@
 import './App.css';
 import Header from './components/common/Header';
 import Memo from './components/memo/Memo';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 function App() {
   let today = new Date();
-  let _today = String(today);
+  // let _today = today;
 
-  const [mdItems, setMdItems] = useState([]);
+  const [mdItems, setMdItems] = useState();
   const [mmItems, setMmItems] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState();
   const [myDate, setMyDate] = useState();
 
-  setMyDate(_today);
-
   // 모달 헤더 날짜
+  let sampleDate = '';
   const prevDate = (id) => {
-    mmItems.map((mmItem) => {
-      if (mmItem.id === id) {
-        let memoDate = new Date(mmItem.cal.myDate);
-        memoDate.setDate(memoDate.getDate() - 1);
-        setMyDate(memoDate);
+    // mmItems.map((mmItem) => {
+    //   if (mmItem.id === id) {
+    //     let memoDate = new Date(mmItem.cal.myDate);
+    //     memoDate.setDate(memoDate.getDate() - 1);
+    //     setMyDate(memoDate);
+    //     return mmItem;
+    //   }
 
-        return mmItem;
-      }
-      myDate.setDate(myDate.getDate() - 1);
-
-      return mmItem;
-    });
+    sampleDate = new Date(myDate);
+    sampleDate.setDate(sampleDate.getDate() - 1);
+    setMyDate(String(sampleDate));
+    // setMyDate()
+    // return mmItem;
   };
-  const nextDate = (id) => {
-    mmItems.map((mmItem) => {
-      if (mmItem.id === id) {
-        let memoDate = new Date(mmItem.cal);
-        memoDate.setDate(memoDate.getDate() + 1);
-        setMyDate(memoDate);
-        return mmItem;
-      }
-      myDate.setDate(myDate.getDate() + 1);
-      return mmItem;
-    });
+
+  const nextDate = () => {
+    sampleDate = new Date(myDate);
+    sampleDate.setDate(sampleDate.getDate() + 1);
+    setMyDate(String(sampleDate));
   };
 
   // 모달꺼
   const nextMdId = useRef(1);
   const onInsert = useCallback(
     (text) => {
+      if (!text) return null;
       const mdItem = {
         id: nextMdId.current,
         text,
@@ -105,6 +100,7 @@ function App() {
   const nextMmId = useRef(1);
   const insertMemoItem = useCallback(
     (mdItems) => {
+      if (!mdItems.mdItem) return null;
       const mmItem = {
         id: nextMmId.current,
         mdItems,
@@ -112,11 +108,10 @@ function App() {
       };
       setMmItems(mmItems.concat(mmItem));
       nextMmId.current += 1;
-
       setModalOpen(!modalOpen);
       setMdItems([]);
     },
-    [mmItems, modalOpen, myDate, _today],
+    [mmItems, modalOpen, myDate],
   );
 
   const removeMemoItem = useCallback(
@@ -131,6 +126,7 @@ function App() {
     setModalOpen(!modalOpen);
     setMdItems([]);
     setSelectedId();
+    setMyDate(String(today));
   };
 
   // edit 모달 열고 닫기
@@ -161,7 +157,6 @@ function App() {
         mmItem.id === selectedId
           ? {
               ...mmItem,
-              cal: myDate,
               mdItems: mdItems,
             }
           : mmItem,
@@ -170,7 +165,7 @@ function App() {
     setModalOpen(!modalOpen);
     setMdItems([]);
     setSelectedId();
-  }, [mmItems, modalOpen, mdItems, selectedId, myDate]);
+  }, [mmItems, modalOpen, mdItems, selectedId]);
 
   return (
     <>
@@ -200,7 +195,5 @@ function App() {
 export default App;
 
 /**
- * 모달 헤더 날짜 함수
  * 네비게이션 여닫이
- * masonry
  */

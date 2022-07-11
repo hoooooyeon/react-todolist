@@ -91,7 +91,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 const ModalItem = ({ mdItem, onPoint, onCheck, onRemove, selectedId }) => {
   const { id, text, check, point } = mdItem;
 
-  if (!text) return null;
+  // if (!text) return null;
   return (
     <ModalItemBlock>
       {selectedId ? (

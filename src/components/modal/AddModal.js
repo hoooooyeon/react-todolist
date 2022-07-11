@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ModalHeader from './ModalHeader';
 import ModalInsert from './ModalInsert';
 import ModalItems from './ModalItems';
+import EditModalHeader from './EditModalHeader';
 
 const ModalBlock = styled.div`
   width: 100%;
@@ -67,13 +68,21 @@ const AddModal = ({
     <ModalBlock>
       <ModalBg onClick={modalClose} />
       <ModalForm>
-        <ModalHeader
-          prevDate={prevDate}
-          nextDate={nextDate}
-          myDate={myDate}
-          selectedId={selectedId}
-          mmItems={mmItems}
-        />
+        {selectedId ? (
+          <EditModalHeader
+            myDate={myDate}
+            selectedId={selectedId}
+            mmItems={mmItems}
+          />
+        ) : (
+          <ModalHeader
+            prevDate={prevDate}
+            nextDate={nextDate}
+            myDate={myDate}
+            selectedId={selectedId}
+            mmItems={mmItems}
+          />
+        )}
         <div>
           <ModalInsert onInsert={onInsert} />
           <ModalItems

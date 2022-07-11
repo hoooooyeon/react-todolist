@@ -7,6 +7,7 @@ const MemoItemsBlock = styled.div`
 
 const MemoItems = ({ mmItem }) => {
   const { mdItems } = mmItem;
+
   return (
     <MemoItemsBlock>
       {mdItems.map((mdItem) => (

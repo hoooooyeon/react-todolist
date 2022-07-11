@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import MemoItems from './MemoItems';
 import MemoFunc from './MemoFunc';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 const MemoListBlock = styled.div`
   border: 2px solid #a3c6c4;

@@ -1,9 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import react, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import MemoItems from '../memo/MemoItems';
 
 const ModalHeaderBlock = styled.div`
   height: 15%;
@@ -12,10 +11,10 @@ const ModalHeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
 const IconDiv = styled.div`
   width: 35px;
   height: 35px;
-  display: inline-block;
   margin-top: 30px;
   visibility: hidden;
   &:hover {
@@ -37,7 +36,7 @@ const Today = styled.h1`
   margin-top: 25px;
 `;
 
-const ModalHeader = ({ myDate, prevDate, nextDate, selectedId, mmItems }) => {
+const ModalHeader = ({ myDate, prevDate, nextDate, selectedId }) => {
   const monthStr = [
     'January',
     'February',
@@ -62,13 +61,14 @@ const ModalHeader = ({ myDate, prevDate, nextDate, selectedId, mmItems }) => {
     'SATURDAY',
   ];
 
-  let memoDate = '';
-  mmItems.map((mmItem) => {
-    if (mmItem.id === selectedId) {
-      memoDate = new Date(mmItem.cal);
-    }
-    return null;
-  });
+  // let memoDate = '';
+  // mmItems.map((mmItem) => {
+  //   if (mmItem.id === selectedId) {
+  //     memoDate = new Date(mmItem.cal);
+  //   }
+  //   return null;
+  // });
+  let memoDate = new Date(myDate);
 
   // 모달 헤더의 날짜 화살표 visibile
   const arrowLeft = useRef();
@@ -88,11 +88,8 @@ const ModalHeader = ({ myDate, prevDate, nextDate, selectedId, mmItems }) => {
         <StyledFontAwesomeIcon icon={faCaretLeft} />
       </IconDiv>
       <Today>
-        {selectedId
-          ? `${dayStr[memoDate.getDay()]}, ${monthStr[memoDate.getMonth()]} 
-    ${memoDate.getDate()}th`
-          : `${dayStr[myDate.getDay()]}, ${monthStr[myDate.getMonth()]} 
-${myDate.getDate()}th`}
+        {`${dayStr[memoDate.getDay()]}, ${monthStr[memoDate.getMonth()]} 
+${memoDate.getDate()}th`}
       </Today>
       <IconDiv ref={arrowRight} onClick={() => nextDate(selectedId)}>
         <StyledFontAwesomeIcon icon={faCaretRight} />

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useRef, useEffect } from 'react';
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -19,8 +20,20 @@ const HeaderBlock = styled.div`
 `;
 
 const Header = () => {
+  // 스크롤 위치에 따라 header 그림자
+  const headerRef = useRef();
+  useEffect(() => {
+    const bodyScroll = document.body;
+    bodyScroll.addEventListener('scroll', function () {
+      if (bodyScroll.scrollTop === 0) {
+        headerRef.current.style.boxShadow = 'none';
+      } else {
+        headerRef.current.style.boxShadow = '1px 5px 10px gray';
+      }
+    });
+  });
   return (
-    <HeaderBlock>
+    <HeaderBlock ref={headerRef}>
       <h1>TO DO LIST</h1>
     </HeaderBlock>
   );
