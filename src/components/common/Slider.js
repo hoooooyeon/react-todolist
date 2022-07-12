@@ -19,6 +19,7 @@ const IconDiv = styled.div`
   height: 35px;
   display: inline-block;
   margin: 5px 0 0 6px;
+  cursor: pointer;
   &:hover {
     border-radius: 100px;
     background-color: #e0e7e9;

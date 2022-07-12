@@ -28,7 +28,7 @@ const StyledButton = styled.button`
   color: #6c7a89;
   font-weight: bold;
   border-radius: 5px;
-
+  cursor: pointer;
   width: 80px;
   height: 35px;
   font-size: 15px;

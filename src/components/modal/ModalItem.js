@@ -21,7 +21,7 @@ const CheckBoxLabel = styled.label`
   border-radius: 100px;
   background-color: white;
   position: relative;
-
+  cursor: pointer;
   ${CheckBox}:checked + & {
     ::after {
       content: '✔';
@@ -71,20 +71,17 @@ const IconDiv = styled.div`
   width: 35px;
   height: 35px;
   display: inline-block;
-  margin: 5px 0 0 6px;
+  text-align: center;
   &:hover {
     border-radius: 100px;
     background-color: #e0e7e9;
     cursor: pointer;
   }
-  & + & {
-    margin-left: 0.5rem;
-  }
 `;
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   color: #354649;
   font-size: 25px;
-  margin: 4px 0 0 5px;
+  margin: 4px 0 0 2px;
   text-align: center;
 `;
 

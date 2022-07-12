@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import MemoItems from './MemoItems';
 import MemoFunc from './MemoFunc';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const MemoListBlock = styled.div`
   border: 2px solid #a3c6c4;
@@ -12,6 +12,12 @@ const MemoListBlock = styled.div`
   &:hover {
     box-shadow: 1px 1px 5px gray;
   }
+
+  ${(props) =>
+    props.height &&
+    css`
+      grid-row-end: ${`span ${Math.ceil(props.height / 10)}`};
+    `};
 `;
 
 const ListHeader = styled.h3`
@@ -53,11 +59,17 @@ const MemoList = ({ mmItem, removeMemoItem, modalClose, editModalOpen }) => {
   const onMouseOut = (e) => {
     func.current.style.visibility = 'hidden';
   };
+
+  const ref = useRef();
+  const height = ref.current && ref.current.offsetHeight;
+
   return (
     <MemoListBlock
+      ref={ref}
       onMouseOut={onMouseOut}
       onMouseOver={onMouseOver}
       onClick={modalClose}
+      height={height}
     >
       <ListHeader>{`${dayStr[memoDate.getDay()]}, ${
         monthStr[memoDate.getMonth()]

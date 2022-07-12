@@ -45,15 +45,15 @@ const Memo = ({
   nextDate,
 }) => {
   // masonry layout
-  const memoListRef = useRef();
-  const masonryLayout = () => {
-    console.log(memoListRef.offsetHeight);
-    memoListRef.current.style.gridRowEnd = '';
-    memoListRef.current.style.gridRowEnd = `span ${Math.ceil(
-      memoListRef.offsetHeight / 10,
-    )}`;
-  };
-  window.addEventListener('resize', masonryLayout);
+  // const memoListRef = useRef();
+  // const masonryLayout = () => {
+  //   console.log(memoListRef.offsetHeight);
+  //   memoListRef.current.style.gridRowEnd = '';
+  //   memoListRef.current.style.gridRowEnd = `span ${Math.ceil(
+  //     memoListRef.offsetHeight / 10,
+  //   )}`;
+  // };
+  // window.addEventListener('resize', masonryLayout);
 
   return (
     <Main>

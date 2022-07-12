@@ -98,21 +98,19 @@ function App() {
 
   // 메모꺼
   const nextMmId = useRef(1);
-  const insertMemoItem = useCallback(
-    (mdItems) => {
-      if (!mdItems.mdItem) return null;
-      const mmItem = {
-        id: nextMmId.current,
-        mdItems,
-        cal: myDate,
-      };
-      setMmItems(mmItems.concat(mmItem));
-      nextMmId.current += 1;
-      setModalOpen(!modalOpen);
-      setMdItems([]);
-    },
-    [mmItems, modalOpen, myDate],
-  );
+  const insertMemoItem = useCallback(() => {
+    if (mdItems.length === 0) return null;
+    const mmItem = {
+      id: nextMmId.current,
+      mdItems,
+      cal: myDate,
+    };
+    if (mdItems === []) return null;
+    setMmItems(mmItems.concat(mmItem));
+    nextMmId.current += 1;
+    setModalOpen(!modalOpen);
+    setMdItems([]);
+  }, [mmItems, mdItems, modalOpen, myDate]);
 
   const removeMemoItem = useCallback(
     (id) => {
@@ -152,6 +150,7 @@ function App() {
     //   mdItems,
     // };
     // setMmItems(mmItems.concat(mmItem));
+    if (mdItems.length === 0) return null;
     setMmItems(
       mmItems.map((mmItem) =>
         mmItem.id === selectedId

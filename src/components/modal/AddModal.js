@@ -43,7 +43,9 @@ const StyledButton = styled.button`
   font-size: 20px;
   position: relative;
   left: 25%;
+  top: 25px;
   transform: translate(0, 150%);
+  cursor: pointer;
   & + & {
     margin-left: 1rem;
   }
@@ -95,9 +97,7 @@ const AddModal = ({
           {selectedId ? (
             <StyledButton onClick={editModalClose}>EDIT</StyledButton>
           ) : (
-            <StyledButton onClick={() => insertMemoItem(mdItems)}>
-              ADD
-            </StyledButton>
+            <StyledButton onClick={insertMemoItem}>ADD</StyledButton>
           )}
           <StyledButton onClick={modalClose}>CANCEL</StyledButton>
         </div>
