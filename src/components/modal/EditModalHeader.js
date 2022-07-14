@@ -13,13 +13,7 @@ const Today = styled.h1`
   margin-top: 25px;
 `;
 
-const EditModalHeader = ({
-  myDate,
-  selectedId,
-  mmItems,
-  prevDate,
-  nextDate,
-}) => {
+const EditModalHeader = ({ selectedId, mmItems }) => {
   const monthStr = [
     'January',
     'February',

@@ -71,11 +71,7 @@ const AddModal = ({
       <ModalBg onClick={modalClose} />
       <ModalForm>
         {selectedId ? (
-          <EditModalHeader
-            myDate={myDate}
-            selectedId={selectedId}
-            mmItems={mmItems}
-          />
+          <EditModalHeader selectedId={selectedId} mmItems={mmItems} />
         ) : (
           <ModalHeader
             prevDate={prevDate}

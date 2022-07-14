@@ -59,6 +59,7 @@ const MemoList = ({ mmItem, removeMemoItem, modalClose, editModalOpen }) => {
     'FRIDAY',
     'SATURDAY',
   ];
+
   // MemoFunc를 마우스 올릴때만 보이게 하기.
   const func = useRef();
   const onMouseOver = (e) => {

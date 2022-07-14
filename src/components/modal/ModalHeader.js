@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import react, { useState, useRef } from 'react';
+import styled from 'styled-components';
+import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
@@ -61,13 +61,6 @@ const ModalHeader = ({ myDate, prevDate, nextDate, selectedId }) => {
     'SATURDAY',
   ];
 
-  // let memoDate = '';
-  // mmItems.map((mmItem) => {
-  //   if (mmItem.id === selectedId) {
-  //     memoDate = new Date(mmItem.cal);
-  //   }
-  //   return null;
-  // });
   let memoDate = new Date(myDate);
 
   // 모달 헤더의 날짜 화살표 visibile

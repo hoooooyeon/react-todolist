@@ -1,11 +1,10 @@
 import './App.css';
 import Header from './components/common/Header';
 import Memo from './components/memo/Memo';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 function App() {
   let today = new Date();
-  // let _today = today;
 
   const [mdItems, setMdItems] = useState();
   const [mmItems, setMmItems] = useState([]);
@@ -15,20 +14,10 @@ function App() {
 
   // 모달 헤더 날짜
   let sampleDate = '';
-  const prevDate = (id) => {
-    // mmItems.map((mmItem) => {
-    //   if (mmItem.id === id) {
-    //     let memoDate = new Date(mmItem.cal.myDate);
-    //     memoDate.setDate(memoDate.getDate() - 1);
-    //     setMyDate(memoDate);
-    //     return mmItem;
-    //   }
-
+  const prevDate = () => {
     sampleDate = new Date(myDate);
     sampleDate.setDate(sampleDate.getDate() - 1);
     setMyDate(String(sampleDate));
-    // setMyDate()
-    // return mmItem;
   };
 
   const nextDate = () => {
@@ -37,7 +26,7 @@ function App() {
     setMyDate(String(sampleDate));
   };
 
-  // 모달꺼
+  // 모달
   const nextMdId = useRef(1);
   const onInsert = useCallback(
     (text) => {
@@ -96,7 +85,7 @@ function App() {
     [mdItems],
   );
 
-  // 메모꺼
+  // 메모
   const nextMmId = useRef(1);
   const insertMemoItem = useCallback(() => {
     if (mdItems.length === 0) return null;
@@ -119,7 +108,7 @@ function App() {
     [mmItems],
   );
 
-  // 모달 열고 닫기
+  // 생성 모달 열고 닫기
   const modalClose = () => {
     setModalOpen(!modalOpen);
     setMdItems([]);
@@ -136,7 +125,6 @@ function App() {
       mmItems.map((mmItem) => {
         if (mmItem.id === id) {
           setMdItems(mmItem.mdItems);
-          // setMmItems(mmItems.filter((mmItem) => mmItem.id !== id));
         }
         return mdItems;
       });
@@ -145,11 +133,6 @@ function App() {
   );
 
   const editModalClose = useCallback(() => {
-    // const _mmItem = {
-    //   id: selectedId,
-    //   mdItems,
-    // };
-    // setMmItems(mmItems.concat(mmItem));
     if (mdItems.length === 0) return null;
     setMmItems(
       mmItems.map((mmItem) =>
@@ -192,7 +175,3 @@ function App() {
 }
 
 export default App;
-
-/**
- * 네비게이션 여닫이
- */
