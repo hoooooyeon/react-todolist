@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import MemoItems from './MemoItems';
 import MemoFunc from './MemoFunc';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 const MemoListBlock = styled.div`
   border: 2px solid #a3c6c4;
@@ -27,6 +27,14 @@ const ListHeader = styled.h3`
 `;
 
 const MemoList = ({ mmItem, removeMemoItem, modalClose, editModalOpen }) => {
+  const ref = useRef();
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    setHeight(0);
+    setHeight(ref.current && ref.current.offsetHeight);
+  }, [ref, height]);
+
   let memoDate = new Date(mmItem.cal);
   const monthStr = [
     'January',
@@ -59,9 +67,6 @@ const MemoList = ({ mmItem, removeMemoItem, modalClose, editModalOpen }) => {
   const onMouseOut = (e) => {
     func.current.style.visibility = 'hidden';
   };
-
-  const ref = useRef();
-  const height = ref.current && ref.current.offsetHeight;
 
   return (
     <MemoListBlock
