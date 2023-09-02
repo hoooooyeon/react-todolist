@@ -3,6 +3,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
+const ItemItemsBlock = styled.div`
+  position: relative;
+  width: 450px;
+  height: 230px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #a3c6c4;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #e0e7e9;
+  }
+`;
+
 const ModalItemBlock = styled.div`
   width: 400px;
   display: flex;
@@ -85,36 +103,41 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   text-align: center;
 `;
 
-const ModalItem = ({ mdItem, onPoint, onCheck, onRemove, selectedId }) => {
-  const { id, text, check, point } = mdItem;
-
+const ModalMemoList = ({ mdItems, onPoint, onCheck, onRemove, selectedId }) => {
   return (
-    <ModalItemBlock>
-      {selectedId ? (
-        <>
-          <CheckBox
-            type="checkbox"
-            checked={check.checked}
-            onChange={() => {}}
-          />
-          <CheckBoxLabel htmlFor={check.id} onClick={() => onCheck(id)} />
-          <SelectedTextForm check={check} point={point}>
-            {text}
-          </SelectedTextForm>
-        </>
-      ) : (
-        <TextForm point={point}>{text}</TextForm>
-      )}
-      <div>
-        <IconDiv onClick={() => onPoint(id)}>
-          <StyledFontAwesomeIcon icon={faExclamation} />
-        </IconDiv>
-        <IconDiv onClick={() => onRemove(id)}>
-          <StyledFontAwesomeIcon icon={faTrashCan} />
-        </IconDiv>
-      </div>
-    </ModalItemBlock>
+    <ItemItemsBlock>
+      {mdItems.map((mdItem) => {
+        const { id, text, check, point } = mdItem;
+
+        return (
+          <ModalItemBlock key={mdItem.id}>
+            {selectedId ? (
+              <>
+                <CheckBox
+                  type="checkbox"
+                  checked={check.checked}
+                  onChange={() => {}}
+                />
+                <CheckBoxLabel htmlFor={check.id} onClick={() => onCheck(id)} />
+                <SelectedTextForm check={check} point={point}>
+                  {text}
+                </SelectedTextForm>
+              </>
+            ) : (
+              <TextForm point={point}>{text}</TextForm>
+            )}
+            <div>
+              <IconDiv onClick={() => onPoint(id)}>
+                <StyledFontAwesomeIcon icon={faExclamation} />
+              </IconDiv>
+              <IconDiv onClick={() => onRemove(id)}>
+                <StyledFontAwesomeIcon icon={faTrashCan} />
+              </IconDiv>
+            </div>
+          </ModalItemBlock>
+        );
+      })}
+    </ItemItemsBlock>
   );
 };
-
-export default ModalItem;
+export default ModalMemoList;

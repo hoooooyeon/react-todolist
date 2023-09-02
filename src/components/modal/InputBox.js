@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { useState, useCallback } from 'react';
 
-const ModalInsertBlock = styled.form`
+const InputBoxBlock = styled.form`
   position: relative;
-  top: 30px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
 `;
 
 const TextInput = styled.input`
@@ -34,7 +36,7 @@ const StyledButton = styled.button`
   font-size: 15px;
 `;
 
-const ModalInsert = ({ onInsert }) => {
+const InputBox = ({ onInsert }) => {
   const [value, setValue] = useState('');
 
   const onChange = useCallback((e) => {
@@ -51,15 +53,15 @@ const ModalInsert = ({ onInsert }) => {
   );
 
   return (
-    <ModalInsertBlock onSubmit={onSubmit}>
+    <InputBoxBlock onSubmit={onSubmit}>
       <TextInput
         placeholder="Input here..."
         onChange={onChange}
         value={value}
       />
-      <StyledButton>INPUT</StyledButton>
-    </ModalInsertBlock>
+      <StyledButton type="button">INPUT</StyledButton>
+    </InputBoxBlock>
   );
 };
 
-export default ModalInsert;
+export default InputBox;

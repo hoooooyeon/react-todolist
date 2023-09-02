@@ -20,18 +20,23 @@ const HeaderBlock = styled.div`
 `;
 
 const Header = () => {
-  // 스크롤 위치에 따라 header 그림자
   const headerRef = useRef();
+  const headerShadowing = () => {
+    if (window.pageYOffset === 0) {
+      headerRef.current.style.boxShadow = 'none';
+    } else {
+      headerRef.current.style.boxShadow = '1px 5px 10px gray';
+    }
+  };
+
   useEffect(() => {
-    const bodyScroll = document.body;
-    bodyScroll.addEventListener('scroll', function () {
-      if (bodyScroll.scrollTop === 0) {
-        headerRef.current.style.boxShadow = 'none';
-      } else {
-        headerRef.current.style.boxShadow = '1px 5px 10px gray';
-      }
-    });
-  });
+    window.addEventListener('scroll', headerShadowing);
+    headerShadowing();
+    return () => {
+      window.removeEventListener('scroll', headerShadowing);
+    };
+  }, []);
+
   return (
     <HeaderBlock ref={headerRef}>
       <h1>TO DO LIST</h1>

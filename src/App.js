@@ -1,14 +1,39 @@
 import './App.css';
 import Header from './components/common/Header';
-import Memo from './components/memo/Memo';
+import Main from './components/Main';
 import { useState, useRef, useCallback } from 'react';
 
 function App() {
+  const monthStr = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const dayStr = [
+    'SUNDAY',
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+  ];
+
   let today = new Date();
 
   const [mdItems, setMdItems] = useState();
   const [mmItems, setMmItems] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isEditModal, setIsEditModal] = useState(false);
+  const [isAddModal, setIsAddModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
   const [myDate, setMyDate] = useState();
 
@@ -87,7 +112,7 @@ function App() {
 
   // 메모
   const nextMmId = useRef(1);
-  const insertMemoItem = useCallback(() => {
+  const onCreateToDoItem = useCallback(() => {
     if (mdItems.length === 0) return null;
     const mmItem = {
       id: nextMmId.current,
@@ -97,9 +122,10 @@ function App() {
     if (mdItems === []) return null;
     setMmItems(mmItems.concat(mmItem));
     nextMmId.current += 1;
-    setModalOpen(!modalOpen);
+    // setModalOpen(!modalOpen);
+    setIsAddModal(false);
     setMdItems([]);
-  }, [mmItems, mdItems, modalOpen, myDate]);
+  }, [mmItems, mdItems, isAddModal, myDate]);
 
   const removeMemoItem = useCallback(
     (id) => {
@@ -108,18 +134,20 @@ function App() {
     [mmItems],
   );
 
-  // 생성 모달 열고 닫기
-  const modalClose = () => {
-    setModalOpen(!modalOpen);
+  // 생성 모달 열기
+  const openAddModal = () => {
+    // setModalOpen(!modalOpen);
+    setIsAddModal(true);
     setMdItems([]);
     setSelectedId();
     setMyDate(String(today));
   };
 
   // edit 모달 열고 닫기
-  const editModalOpen = useCallback(
+  const openEditModal = useCallback(
     (id) => {
-      setModalOpen(!modalOpen);
+      // setModalOpen(!modalOpen);
+      setIsEditModal(true);
       setSelectedId(id);
 
       mmItems.map((mmItem) => {
@@ -129,10 +157,10 @@ function App() {
         return mdItems;
       });
     },
-    [modalOpen, mmItems, mdItems],
+    [isEditModal, mmItems, mdItems],
   );
 
-  const editModalClose = useCallback(() => {
+  const onUpdateToDoItem = useCallback(() => {
     if (mdItems.length === 0) return null;
     setMmItems(
       mmItems.map((mmItem) =>
@@ -144,27 +172,30 @@ function App() {
           : mmItem,
       ),
     );
-    setModalOpen(!modalOpen);
+    setIsEditModal(false);
     setMdItems([]);
     setSelectedId();
-  }, [mmItems, modalOpen, mdItems, selectedId]);
+  }, [mmItems, isEditModal, mdItems, selectedId]);
 
   return (
     <>
       <Header />
-      <Memo
+      <Main
+        monthStr={monthStr}
+        dayStr={dayStr}
         mdItems={mdItems}
         mmItems={mmItems}
+        isAddModal={isAddModal}
+        isEditModal={isEditModal}
         onInsert={onInsert}
         onRemove={onRemove}
         onCheck={onCheck}
         onPoint={onPoint}
-        insertMemoItem={insertMemoItem}
+        onCreateToDoItem={onCreateToDoItem}
         removeMemoItem={removeMemoItem}
-        modalClose={modalClose}
-        modalOpen={modalOpen}
-        editModalOpen={editModalOpen}
-        editModalClose={editModalClose}
+        openAddModal={openAddModal}
+        openEditModal={openEditModal}
+        onUpdateToDoItem={onUpdateToDoItem}
         selectedId={selectedId}
         myDate={myDate}
         prevDate={prevDate}

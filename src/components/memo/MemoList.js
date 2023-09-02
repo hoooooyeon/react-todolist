@@ -1,93 +1,79 @@
 import styled, { css } from 'styled-components';
-import MemoItems from './MemoItems';
-import MemoFunc from './MemoFunc';
-import React, { useRef, useState, useEffect } from 'react';
 
 const MemoListBlock = styled.div`
-  border: 2px solid #a3c6c4;
-  background-color: white;
-  word-break: break-all;
-  padding: 10px;
-  border-radius: 10px;
-  &:hover {
-    box-shadow: 1px 1px 5px gray;
+  margin: 15px 0 0 10px;
+`;
+
+const MemoItem = styled.div`
+  width: 250px;
+  height: 25px;
+  padding: 5px;
+`;
+const MemoItemCheckBox = styled.input`
+  display: none;
+  &:checked + label::after {
+    content: '✔';
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 20px;
+    position: absolute;
+    bottom: 3px;
+    color: #a3c6c4;
   }
-
+`;
+const MemoItemCheckBoxLabel = styled.label`
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e0e7e9;
+  border-radius: 100px;
+  background-color: white;
+  position: relative;
+  display: inline-block;
+`;
+const MemoItemTextForm = styled.div`
+  width: 210px;
+  height: 30px;
+  outline: none;
+  display: inline-block;
+  position: relative;
+  left: 10px;
+  top: -4px;
   ${(props) =>
-    props.height &&
+    props &&
     css`
-      grid-row-end: ${`span ${Math.ceil(props.height / 10)}`};
-    `};
+      color: ${(props) =>
+        props.check.checked
+          ? 'rgba(0, 0, 0, 0.3)'
+          : props.point.pointed
+          ? 'rgb(240, 12, 12)'
+          : ''};
+      text-decoration: ${(props) =>
+        props.check.checked ? 'line-through' : 'null'};
+    `}
 `;
 
-const ListHeader = styled.h3`
-  text-align: center;
-  color: #354649;
-  margin: 10px 0 0px 0;
-`;
-
-const MemoList = ({ mmItem, removeMemoItem, modalClose, editModalOpen }) => {
-  const ref = useRef();
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    setHeight(0);
-    setHeight(ref.current && ref.current.offsetHeight);
-  }, [ref, height]);
-
-  let memoDate = new Date(mmItem.cal);
-  const monthStr = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-  const dayStr = [
-    'SUNDAY',
-    'MONDAY',
-    'TUESDAY',
-    'WEDNESDAY',
-    'THURSDAY',
-    'FRIDAY',
-    'SATURDAY',
-  ];
-
-  // MemoFunc를 마우스 올릴때만 보이게 하기.
-  const func = useRef();
-  const onMouseOver = (e) => {
-    func.current.style.visibility = 'visible';
-  };
-  const onMouseOut = (e) => {
-    func.current.style.visibility = 'hidden';
-  };
+const MemoList = ({ mmItem }) => {
+  const { mdItems } = mmItem;
 
   return (
-    <MemoListBlock
-      ref={ref}
-      onMouseOut={onMouseOut}
-      onMouseOver={onMouseOver}
-      onClick={modalClose}
-      height={height}
-    >
-      <ListHeader>{`${dayStr[memoDate.getDay()]}, ${
-        monthStr[memoDate.getMonth()]
-      } 
-    ${memoDate.getDate()}th`}</ListHeader>
-      <MemoItems mmItem={mmItem} />
-      <MemoFunc
-        func={func}
-        mmItem={mmItem}
-        removeMemoItem={removeMemoItem}
-        editModalOpen={editModalOpen}
-      />
+    <MemoListBlock>
+      {mdItems.map((mdItem) => {
+        const { text, check, point } = mdItem;
+        return (
+          <MemoItem key={mdItem.id}>
+            <MemoItemCheckBox
+              type="checkbox"
+              checked={check.checked}
+              readOnly
+            />
+            <MemoItemCheckBoxLabel htmlFor={check.id} />
+            <MemoItemTextForm check={check} point={point}>
+              {text}
+            </MemoItemTextForm>
+          </MemoItem>
+        );
+      })}
     </MemoListBlock>
   );
 };

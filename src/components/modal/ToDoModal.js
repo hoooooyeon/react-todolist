@@ -1,0 +1,105 @@
+import styled from 'styled-components';
+import ModalHeader from './ModalHeader';
+import InputBox from './InputBox';
+import ModalMemoList from './ModalMemoList';
+import EditModalHeader from './EditModalHeader';
+
+const ModalBlock = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 997;
+`;
+
+const ModalBg = styled.div`
+  z-index: 997;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+const ModalForm = styled.div`
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  z-index: 999;
+  background-color: white;
+  border-radius: 10px;
+  border: none;
+`;
+
+const StyledButton = styled.button`
+  background-color: #e0e7e9;
+  border: none;
+  color: #6c7a89;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 120px;
+  height: 40px;
+  font-size: 20px;
+  position: relative;
+  left: 25%;
+  top: 25px;
+  transform: translate(0, 150%);
+  cursor: pointer;
+  & + & {
+    margin-left: 1rem;
+  }
+`;
+
+const ToDoModal = ({
+  mdItems,
+  mmItems,
+  onInsert,
+  onRemove,
+  onPoint,
+  onCheck,
+  modalClose,
+  insertMemoItem,
+  selectedId,
+  editModalClose,
+  myDate,
+  prevDate,
+  nextDate,
+}) => {
+  return (
+    <ModalBlock>
+      <ModalBg onClick={modalClose} />
+      <ModalForm>
+        {selectedId ? (
+          <EditModalHeader selectedId={selectedId} mmItems={mmItems} />
+        ) : (
+          <ModalHeader
+            prevDate={prevDate}
+            nextDate={nextDate}
+            myDate={myDate}
+            selectedId={selectedId}
+            mmItems={mmItems}
+          />
+        )}
+        <div>
+          <InputBox onInsert={onInsert} />
+          <ModalMemoList
+            mdItems={mdItems}
+            onRemove={onRemove}
+            onPoint={onPoint}
+            onCheck={onCheck}
+            selectedId={selectedId}
+          />
+          {selectedId ? (
+            <StyledButton onClick={editModalClose}>EDIT</StyledButton>
+          ) : (
+            <StyledButton onClick={insertMemoItem}>ADD</StyledButton>
+          )}
+          <StyledButton onClick={modalClose}>CANCEL</StyledButton>
+        </div>
+      </ModalForm>
+    </ModalBlock>
+  );
+};
+
+export default ToDoModal;

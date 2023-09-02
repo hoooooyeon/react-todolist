@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
-import AddModal from '../modal/AddModal';
 
 const SliderBlock = styled.div`
   background-color: white;
@@ -54,22 +53,7 @@ const StyledLi = styled.li`
   }
 `;
 
-const Slider = ({
-  mdItems,
-  mmItems,
-  onInsert,
-  onRemove,
-  onPoint,
-  onCheck,
-  insertMemoItem,
-  modalClose,
-  modalOpen,
-  selectedId,
-  editModalClose,
-  myDate,
-  prevDate,
-  nextDate,
-}) => {
+const Slider = ({ openAddModal }) => {
   return (
     <>
       <SliderBlock>
@@ -77,29 +61,12 @@ const Slider = ({
           <StyledFontAwesomeIcon icon={faBars} />
         </IconDiv>
         <StyledUl>
-          <StyledLi onClick={modalClose}>
+          <StyledLi onClick={openAddModal}>
             <StyledFontAwesomeIcon icon={faCalendarPlus} margin="true" />
             <p>Memo</p>
           </StyledLi>
         </StyledUl>
       </SliderBlock>
-      {modalOpen && (
-        <AddModal
-          modalClose={modalClose}
-          mdItems={mdItems}
-          mmItems={mmItems}
-          onInsert={onInsert}
-          onRemove={onRemove}
-          onPoint={onPoint}
-          onCheck={onCheck}
-          insertMemoItem={insertMemoItem}
-          selectedId={selectedId}
-          editModalClose={editModalClose}
-          myDate={myDate}
-          prevDate={prevDate}
-          nextDate={nextDate}
-        />
-      )}
     </>
   );
 };
