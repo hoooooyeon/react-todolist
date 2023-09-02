@@ -53,13 +53,15 @@ const InputBox = ({ onInsert }) => {
   );
 
   return (
-    <InputBoxBlock onSubmit={onSubmit}>
+    <InputBoxBlock>
       <TextInput
         placeholder="Input here..."
         onChange={onChange}
         value={value}
       />
-      <StyledButton type="button">INPUT</StyledButton>
+      <StyledButton type="button" onClick={onSubmit}>
+        Input
+      </StyledButton>
     </InputBoxBlock>
   );
 };

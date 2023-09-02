@@ -113,6 +113,7 @@ function App() {
   // 메모
   const nextMmId = useRef(1);
   const onCreateToDoItem = useCallback(() => {
+    setIsAddModal(false);
     if (mdItems.length === 0) return null;
     const mmItem = {
       id: nextMmId.current,
@@ -122,10 +123,8 @@ function App() {
     if (mdItems === []) return null;
     setMmItems(mmItems.concat(mmItem));
     nextMmId.current += 1;
-    // setModalOpen(!modalOpen);
-    setIsAddModal(false);
     setMdItems([]);
-  }, [mmItems, mdItems, isAddModal, myDate]);
+  }, [mmItems, mdItems, myDate]);
 
   const removeMemoItem = useCallback(
     (id) => {

@@ -50,6 +50,10 @@ const Main = ({
         mdItems={mdItems}
         isAddModal={isAddModal}
         onCreateToDoItem={onCreateToDoItem}
+        onInsert={onInsert}
+        onRemove={onRemove}
+        onPoint={onPoint}
+        onCheck={onCheck}
       />
       <EditModal
         selectedId={selectedId}
@@ -59,6 +63,10 @@ const Main = ({
         dayStr={dayStr}
         isEditModal={isEditModal}
         onUpdateToDoItem={onUpdateToDoItem}
+        onInsert={onInsert}
+        onRemove={onRemove}
+        onPoint={onPoint}
+        onCheck={onCheck}
       />
       {/* {modalOpen && (
         <ToDoModal

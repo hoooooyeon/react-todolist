@@ -7,14 +7,14 @@ const ModalBg = styled.div`
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 997;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 const ModalBlock = styled.div`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   border-radius: 0.5rem;
   padding: 0.5rem 0.5rem 1rem;
   background-color: white;
@@ -29,7 +29,7 @@ const ModalFooter = styled.div`
   display: flex;
   justify-content: center;
   padding: 0 0.5rem;
-  margin-top: 1rem;
+  margin: 20px 0;
 `;
 
 const StyledButton = styled.button`
@@ -49,7 +49,7 @@ const Modal = ({ modalVisible, children, onModalConfirm }) => {
 
   return (
     <ModalBg onClick={onModalConfirm}>
-      <ModalBlock>
+      <ModalBlock onClick={(e) => e.stopPropagation()}>
         <ModalContent>{children}</ModalContent>
         <ModalFooter>
           <StyledButton onClick={onModalConfirm}>Confirm</StyledButton>
