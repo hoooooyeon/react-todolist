@@ -8,6 +8,7 @@ const ItemItemsBlock = styled.div`
   width: 450px;
   height: 230px;
   overflow: auto;
+  margin: 1rem 0;
   &::-webkit-scrollbar {
     width: 12px;
   }
@@ -75,16 +76,6 @@ const SelectedTextForm = styled.div`
     `}
 `;
 
-const TextForm = styled.div`
-  width: 300px;
-  height: 32px;
-  font-size: 20px;
-  border: 2px solid #a3c6c4;
-  border-radius: 5px;
-  padding: 1px 8px 0 8px;
-  color: ${(props) => (props.point.pointed ? 'rgb(240, 12, 12)' : '')};
-`;
-
 const IconDiv = styled.div`
   width: 35px;
   height: 35px;
@@ -103,29 +94,26 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   text-align: center;
 `;
 
-const ModalMemoList = ({ mdItems, onPoint, onCheck, onRemove, selectedId }) => {
+const ModalMemoList = ({ memoArr, onPoint, onCheck, onRemove, selectedId }) => {
   return (
     <ItemItemsBlock>
-      {mdItems.map((mdItem) => {
-        const { id, text, check, point } = mdItem;
+      {memoArr.map((modalMemo) => {
+        const { id, text, check, point } = modalMemo;
 
         return (
-          <ModalItemBlock key={mdItem.id}>
-            {selectedId ? (
-              <>
-                <CheckBox
-                  type="checkbox"
-                  checked={check.checked}
-                  onChange={() => {}}
-                />
-                <CheckBoxLabel htmlFor={check.id} onClick={() => onCheck(id)} />
-                <SelectedTextForm check={check} point={point}>
-                  {text}
-                </SelectedTextForm>
-              </>
-            ) : (
-              <TextForm point={point}>{text}</TextForm>
-            )}
+          <ModalItemBlock key={modalMemo.id}>
+            <>
+              <CheckBox
+                type="checkbox"
+                checked={check.checked}
+                onChange={() => {}}
+              />
+              <CheckBoxLabel htmlFor={check.id} onClick={() => onCheck(id)} />
+              <SelectedTextForm check={check} point={point}>
+                {text}
+              </SelectedTextForm>
+            </>
+
             <div>
               <IconDiv onClick={() => onPoint(id)}>
                 <StyledFontAwesomeIcon icon={faExclamation} />

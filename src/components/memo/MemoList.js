@@ -53,15 +53,15 @@ const MemoItemTextForm = styled.div`
     `}
 `;
 
-const MemoList = ({ mmItem }) => {
-  const { mdItems } = mmItem;
+const MemoList = ({ toDoMemo }) => {
+  const { memoArr } = toDoMemo;
 
   return (
     <MemoListBlock>
-      {mdItems.map((mdItem) => {
-        const { text, check, point } = mdItem;
+      {memoArr.map((modalMemo) => {
+        const { text, check, point } = modalMemo;
         return (
-          <MemoItem key={mdItem.id}>
+          <MemoItem key={modalMemo.id}>
             <MemoItemCheckBox
               type="checkbox"
               checked={check.checked}

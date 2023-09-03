@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Slider from './common/Slider';
-import AddModal from './modal/AddModal';
-import EditModal from './modal/EditModal';
+import ToDoModal from './modal/ToDoModal';
 import ToDoList from './ToDoList';
 
 const MainBlock = styled.div`
@@ -16,14 +15,14 @@ const Main = ({
   dayStr,
   isAddModal,
   isEditModal,
-  mdItems,
+  memoArr,
   onInsert,
   onRemove,
   onCheck,
   onPoint,
-  mmItems,
+  toDoArr,
   onCreateToDoItem,
-  removeMemoItem,
+  onDeleteToDo,
   openAddModal,
   openEditModal,
   onUpdateToDoItem,
@@ -36,61 +35,42 @@ const Main = ({
     <MainBlock>
       <Slider openAddModal={openAddModal} />
       <ToDoList
-        mmItems={mmItems}
-        removeMemoItem={removeMemoItem}
+        monthStr={monthStr}
+        dayStr={dayStr}
+        toDoArr={toDoArr}
+        onDeleteToDo={onDeleteToDo}
         openEditModal={openEditModal}
       />
-      <AddModal
+      <ToDoModal
         prevDate={prevDate}
         nextDate={nextDate}
         selectedId={selectedId}
         myDate={myDate}
         monthStr={monthStr}
         dayStr={dayStr}
-        mdItems={mdItems}
-        isAddModal={isAddModal}
-        onCreateToDoItem={onCreateToDoItem}
+        memoArr={memoArr}
+        modalVisible={isAddModal}
+        onModalConfirm={onCreateToDoItem}
         onInsert={onInsert}
         onRemove={onRemove}
         onPoint={onPoint}
         onCheck={onCheck}
       />
-      <EditModal
+      <ToDoModal
+        prevDate={prevDate}
+        nextDate={nextDate}
         selectedId={selectedId}
-        mmItems={mmItems}
-        mdItems={mdItems}
+        myDate={myDate}
         monthStr={monthStr}
         dayStr={dayStr}
-        isEditModal={isEditModal}
-        onUpdateToDoItem={onUpdateToDoItem}
+        memoArr={memoArr}
+        modalVisible={isEditModal}
+        onModalConfirm={onUpdateToDoItem}
         onInsert={onInsert}
         onRemove={onRemove}
         onPoint={onPoint}
         onCheck={onCheck}
       />
-      {/* {modalOpen && (
-        <ToDoModal
-          modalClose={modalClose}
-          mdItems={mdItems}
-          mmItems={mmItems}
-
-          onInsert={onInsert}
-          onRemove={onRemove}
-          onPoint={onPoint}
-          onCheck={onCheck}
-
-          insertMemoItem={insertMemoItem}
-
-          selectedId={selectedId}
-
-          editModalClose={editModalClose}
-
-          myDate={myDate}
-
-          prevDate={prevDate}
-          nextDate={nextDate}
-        />
-      )} */}
     </MainBlock>
   );
 };

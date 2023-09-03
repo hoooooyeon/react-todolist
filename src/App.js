@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './components/common/Header';
 import Main from './components/Main';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 function App() {
   const monthStr = [
@@ -28,153 +28,161 @@ function App() {
     'SATURDAY',
   ];
 
-  let today = new Date();
-
-  const [mdItems, setMdItems] = useState();
-  const [mmItems, setMmItems] = useState([]);
-  const [isEditModal, setIsEditModal] = useState(false);
+  const [toDoArr, setToDoArr] = useState([]);
+  const [memoArr, setMemoArr] = useState([]);
   const [isAddModal, setIsAddModal] = useState(false);
+  const [isEditModal, setIsEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
   const [myDate, setMyDate] = useState();
 
-  // 모달 헤더 날짜
-  let sampleDate = '';
+  /* 모달 날짜 함수 */
   const prevDate = () => {
-    sampleDate = new Date(myDate);
+    let sampleDate = new Date(myDate);
     sampleDate.setDate(sampleDate.getDate() - 1);
     setMyDate(String(sampleDate));
   };
 
   const nextDate = () => {
-    sampleDate = new Date(myDate);
+    let sampleDate = new Date(myDate);
     sampleDate.setDate(sampleDate.getDate() + 1);
     setMyDate(String(sampleDate));
   };
 
-  // 모달
-  const nextMdId = useRef(1);
+  /* 메모 함수 */
+  // 메모 Id
+  const nextMemoId = useRef(0);
+
+  // memo 추가
   const onInsert = useCallback(
     (text) => {
       if (!text) return null;
-      const mdItem = {
-        id: nextMdId.current,
+      const modalMemo = {
+        id: nextMemoId.current,
         text,
         check: {
-          id: nextMdId.current,
+          id: nextMemoId.current,
           checked: false,
         },
         point: {
-          id: nextMdId.current,
+          id: nextMemoId.current,
           pointed: false,
         },
       };
-      setMdItems(mdItems.concat(mdItem));
-      nextMdId.current += 1;
+      setMemoArr(memoArr.concat(modalMemo));
+      nextMemoId.current += 1;
     },
-    [mdItems],
+    [memoArr],
   );
 
+  // 메모 삭제
   const onRemove = useCallback(
     (id) => {
-      setMdItems(mdItems.filter((mdItem) => mdItem.id !== id));
+      setMemoArr(memoArr.filter((modalMemo) => modalMemo.id !== id));
     },
-    [mdItems],
+    [memoArr],
   );
 
+  // 메모 체크
   const onCheck = useCallback(
     (id) => {
-      setMdItems(
-        mdItems.map((mdItem) =>
-          mdItem.id === id
+      setMemoArr(
+        memoArr.map((modalMemo) =>
+          modalMemo.id === id
             ? {
-                ...mdItem,
-                check: { checked: !mdItem.check.checked },
+                ...modalMemo,
+                check: { checked: !modalMemo.check.checked },
               }
-            : mdItem,
+            : modalMemo,
         ),
       );
     },
-    [mdItems],
+    [memoArr],
   );
 
+  // 메모 중요 표시
   const onPoint = useCallback(
     (id) => {
-      setMdItems(
-        mdItems.map((mdItem) =>
-          mdItem.id === id
-            ? { ...mdItem, point: { pointed: !mdItem.point.pointed } }
-            : mdItem,
+      setMemoArr(
+        memoArr.map((modalMemo) =>
+          modalMemo.id === id
+            ? { ...modalMemo, point: { pointed: !modalMemo.point.pointed } }
+            : modalMemo,
         ),
       );
     },
-    [mdItems],
+    [memoArr],
   );
 
-  // 메모
-  const nextMmId = useRef(1);
+  /* 모달 함수 */
+  // toDo Id
+  const nextToDoId = useRef(0);
+
+  // todo 생성
   const onCreateToDoItem = useCallback(() => {
     setIsAddModal(false);
-    if (mdItems.length === 0) return null;
-    const mmItem = {
-      id: nextMmId.current,
-      mdItems,
+    if (memoArr.length === 0) return null;
+    const memoItem = {
+      id: nextToDoId.current,
+      memoArr,
       cal: myDate,
     };
-    if (mdItems === []) return null;
-    setMmItems(mmItems.concat(mmItem));
-    nextMmId.current += 1;
-    setMdItems([]);
-  }, [mmItems, mdItems, myDate]);
+    setToDoArr(toDoArr.concat(memoItem));
+    nextToDoId.current += 1;
+    setMemoArr([]);
+  }, [toDoArr, memoArr, myDate]);
 
-  const removeMemoItem = useCallback(
+  // todo 삭제
+  const onDeleteToDo = useCallback(
     (id) => {
-      setMmItems(mmItems.filter((mmItem) => mmItem.id !== id));
+      setToDoArr(toDoArr.filter((toDoItem) => toDoItem.id !== id));
     },
-    [mmItems],
+    [toDoArr],
   );
 
-  // 생성 모달 열기
+  // todoAddModal 열기
   const openAddModal = () => {
-    // setModalOpen(!modalOpen);
     setIsAddModal(true);
-    setMdItems([]);
+    setMemoArr([]);
     setSelectedId();
-    setMyDate(String(today));
+    setMyDate(String(new Date()));
   };
 
-  // edit 모달 열고 닫기
+  // todoEditModal 열기
   const openEditModal = useCallback(
     (id) => {
-      // setModalOpen(!modalOpen);
       setIsEditModal(true);
       setSelectedId(id);
 
-      mmItems.map((mmItem) => {
-        if (mmItem.id === id) {
-          setMdItems(mmItem.mdItems);
+      toDoArr.forEach((toDoItem) => {
+        if (toDoItem.id === id) {
+          setMemoArr(toDoItem.memoArr);
+          setMyDate(new Date(toDoItem.cal));
         }
-        return mdItems;
       });
     },
-    [isEditModal, mmItems, mdItems],
+    [toDoArr],
   );
 
+  // todo 수정
   const onUpdateToDoItem = useCallback(() => {
-    if (mdItems.length === 0) return null;
-    setMmItems(
-      mmItems.map((mmItem) =>
-        mmItem.id === selectedId
+    setToDoArr(
+      toDoArr.map((toDoItem) =>
+        toDoItem.id === selectedId
           ? {
-              ...mmItem,
-              mdItems: mdItems,
+              ...toDoItem,
+              cal: myDate,
+              memoArr: memoArr,
             }
-          : mmItem,
+          : toDoItem,
       ),
     );
+    if (memoArr.length === 0) {
+      onDeleteToDo(selectedId);
+    }
     setIsEditModal(false);
-    setMdItems([]);
-    setSelectedId();
-  }, [mmItems, isEditModal, mdItems, selectedId]);
+    setMemoArr([]);
+    setSelectedId(null);
+  }, [toDoArr, memoArr, selectedId, onDeleteToDo, myDate]);
 
   return (
     <>
@@ -182,8 +190,8 @@ function App() {
       <Main
         monthStr={monthStr}
         dayStr={dayStr}
-        mdItems={mdItems}
-        mmItems={mmItems}
+        memoArr={memoArr}
+        toDoArr={toDoArr}
         isAddModal={isAddModal}
         isEditModal={isEditModal}
         onInsert={onInsert}
@@ -191,7 +199,7 @@ function App() {
         onCheck={onCheck}
         onPoint={onPoint}
         onCreateToDoItem={onCreateToDoItem}
-        removeMemoItem={removeMemoItem}
+        onDeleteToDo={onDeleteToDo}
         openAddModal={openAddModal}
         openEditModal={openEditModal}
         onUpdateToDoItem={onUpdateToDoItem}
