@@ -63,7 +63,7 @@ const Slider = ({ openAddModal }) => {
         <StyledUl>
           <StyledLi onClick={openAddModal}>
             <StyledFontAwesomeIcon icon={faCalendarPlus} margin="true" />
-            <p>Memo</p>
+            <p>ToDo</p>
           </StyledLi>
         </StyledUl>
       </SliderBlock>

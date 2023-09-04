@@ -26,14 +26,20 @@ const ToDoList = ({
   dayStr,
 }) => {
   const listRef = useRef();
+
+  // masonry layout (수정시)
   useEffect(() => {
-    if (listRef.current && toDoArr.length > 0) {
-      console.log(listRef.current.offsetHeight);
-      toDoArr.forEach((item) => {
-        console.log(item.getBoundingClientRect());
+    if (listRef.current) {
+      const childElements = Array.from(listRef.current.children);
+      childElements.forEach((item) => {
+        item.style.gridRowEnd = null;
+        item.style.gridRowEnd = `${`span ${Math.ceil(
+          item.getBoundingClientRect().height / 10,
+        )}`}`;
       });
     }
   }, [listRef, toDoArr]);
+
   return (
     <ToDoListBlock ref={listRef}>
       {toDoArr.map((toDoMemo) => {

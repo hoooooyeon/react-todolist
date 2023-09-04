@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './components/common/Header';
 import Main from './components/Main';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 function App() {
   const monthStr = [
@@ -121,12 +121,12 @@ function App() {
   const onCreateToDoItem = useCallback(() => {
     setIsAddModal(false);
     if (memoArr.length === 0) return null;
-    const memoItem = {
+    const toDoItem = {
       id: nextToDoId.current,
       memoArr,
       cal: myDate,
     };
-    setToDoArr(toDoArr.concat(memoItem));
+    setToDoArr([...toDoArr, toDoItem]);
     nextToDoId.current += 1;
     setMemoArr([]);
   }, [toDoArr, memoArr, myDate]);
@@ -143,7 +143,7 @@ function App() {
   const openAddModal = () => {
     setIsAddModal(true);
     setMemoArr([]);
-    setSelectedId();
+    setSelectedId(null);
     setMyDate(String(new Date()));
   };
 

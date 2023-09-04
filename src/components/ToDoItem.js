@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import MemoList from './memo/MemoList';
 import React, { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,12 +14,6 @@ const ToDoItemBlock = styled.div`
   &:hover {
     box-shadow: 1px 1px 5px gray;
   }
-
-  ${(props) =>
-    props.height &&
-    css`
-      grid-row-end: ${`span ${Math.ceil(props.height / 10)}`};
-    `};
 `;
 
 const ItemHeader = styled.h3`
@@ -63,15 +57,15 @@ const ToDoItem = ({
   openEditModal,
 }) => {
   const itemRef = useRef();
-  const [height, setHeight] = useState(0);
-
-  // useEffect(() => {
-  //   console.log(toDoMemo);
-  //   if (itemRef.current) {
-  //     setHeight(0);
-  //     setHeight(itemRef.current.offsetHeight);
-  //   }
-  // }, [itemRef.current]);
+  // masonry layout (생성시)
+  useEffect(() => {
+    if (itemRef.current) {
+      itemRef.current.style.gridRowEnd = null;
+      itemRef.current.style.gridRowEnd = `${`span ${Math.ceil(
+        itemRef.current.offsetHeight / 10,
+      )}`}`;
+    }
+  }, [itemRef]);
 
   const [isHovered, setIsHovered] = useState();
   const onMouseOver = (id) => {
@@ -86,7 +80,6 @@ const ToDoItem = ({
       ref={itemRef}
       onMouseOut={onMouseOut}
       onMouseOver={() => onMouseOver(toDoMemo.id)}
-      height={height}
     >
       <ItemHeader>{`${dayStr[memoDate.getDay()]}, ${
         monthStr[memoDate.getMonth()]
