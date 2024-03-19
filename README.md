@@ -7,6 +7,7 @@
   
 ## 2. 사용 기술
 - React
+- Javascript
 
 ## 3. 링크
 
